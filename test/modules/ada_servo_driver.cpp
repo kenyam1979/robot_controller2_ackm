@@ -23,6 +23,11 @@ AdaServoReturnType AdaServoDriver::initAdaServoDriver(uint8_t addr,
 }
 
 AdaServoReturnType AdaServoDriver::setPWMFreq(float frea) noexcept {
+ 
+  if (frea <= 0) {
+    return AdaServoReturnType::INVALID_PARAM;
+  }
+
   return AdaServoReturnType::OK;
 }
 

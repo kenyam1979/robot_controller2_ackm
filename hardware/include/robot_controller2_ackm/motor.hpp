@@ -11,15 +11,21 @@ enum MotorSetting {
   MAX_MV = 500,
 };
 
-enum MotorReturnType { OK = 0, ERROR = -1, DRIVER_ERROR = -2 };
+enum MotorReturnType {
+  OK = 0,
+  ERROR = -1,
+  DRIVER_ERROR = -2,
+  INITIALIZATION_ERROR = -3
+};
 
 class Motor {
  public:
   Motor() noexcept;
-  MotorReturnType initialize(uint8_t svn) noexcept;
+  MotorReturnType initialize(uint8_t svn, uint8_t addr,
+                             char* dev_fname) noexcept;
   MotorReturnType setManipulatingVariable(int mv) noexcept;
   int getManipulatingVariable() const noexcept;
-  MotorReturnType  stopMotor() noexcept;
+  MotorReturnType stopMotor() noexcept;
   ~Motor() noexcept;
 
  private:

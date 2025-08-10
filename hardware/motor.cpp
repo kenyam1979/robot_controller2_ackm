@@ -6,18 +6,21 @@ AdaServoDriver Motor::motor_driver_;
 
 Motor::Motor() noexcept {
   manipulating_variable_ = 0;
-  servo_no_ = MAX_SERVO_NUM + 1; // Invalid initial value to be initialized later
+  servo_no_ =
+      MAX_SERVO_NUM + 1;  // Invalid initial value to be initialized later
 }
 
-MotorReturnType Motor::initialize(uint8_t svn, uint8_t addr, char* dev_fname) noexcept {
-
-  if (motor_driver_.initAdaServoDriver(addr, dev_fname) != AdaServoReturnType::OK) {
+MotorReturnType Motor::initialize(uint8_t svn, uint8_t addr,
+                                  char* dev_fname) noexcept {
+  if (motor_driver_.initAdaServoDriver(addr, dev_fname) !=
+      AdaServoReturnType::OK) {
     return MotorReturnType::DRIVER_ERROR;
   }
-  
-  if (motor_driver_.setPWMFreq(AdaServoSetting::PWM_FREQ) != AdaServoReturnType::OK) {
+
+  if (motor_driver_.setPWMFreq(AdaServoSetting::PWM_FREQ) !=
+      AdaServoReturnType::OK) {
     return MotorReturnType::DRIVER_ERROR;
-  } 
+  }
 
   if (svn < AdaServoSetting::MIN_SERVO_NUM ||
       svn > AdaServoSetting::MAX_SERVO_NUM) {
@@ -43,11 +46,9 @@ MotorReturnType Motor::setManipulatingVariable(int mv) noexcept {
 
   motor_driver_.setPWM(servo_no_, 0, manipulating_variable_);
   return MotorReturnType::OK;
-
 }
 
 MotorReturnType Motor::stopMotor() noexcept {
-
   if (servo_no_ > AdaServoSetting::MAX_SERVO_NUM) {
     return MotorReturnType::INITIALIZATION_ERROR;
   }

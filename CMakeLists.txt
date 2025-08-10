@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(robot_controller2_ackm LANGUAGES CXX)
+project(robot_controller2_ackm LANGUAGES CXX C)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
   add_compile_options(-Wall -Wextra)
@@ -30,6 +30,7 @@ add_library(
   SHARED
   hardware/carlikebot_system.cpp
   hardware/motor.cpp
+  hardware/photo_encoder.cpp
 )
 target_compile_features(robot_controller2_ackm PUBLIC cxx_std_17)
 target_include_directories(robot_controller2_ackm PUBLIC
@@ -66,18 +67,26 @@ install(TARGETS robot_controller2_ackm
 
 # Unit test for modules
 if(UNIT_TESTING)
-  ament_add_gtest(module_unit_test
-    test/modules/test_motor.cpp
-    test/modules/ada_servo_driver.cpp
 
+  ament_add_gtest(module_unit_test_motor
+    test/modules/ada_servo_driver.cpp
+    test/modules/lgpio.c
+    test/modules/test_motor.cpp
   )
-  target_link_libraries(module_unit_test
+  target_link_libraries(module_unit_test_motor
     robot_controller2_ackm
   )
-  # ament_target_dependencies(unit_test_publisher
-  #   rclcpp
-  #   std_msgs
-  # )
+
+  ament_add_gtest(module_unit_test_photo_encoder
+    test/modules/ada_servo_driver.cpp
+    test/modules/lgpio.c
+    test/modules/test_photo_encoder.cpp
+  )
+
+  target_link_libraries(module_unit_test_photo_encoder
+    robot_controller2_ackm
+  )
+
 
 endif()
 

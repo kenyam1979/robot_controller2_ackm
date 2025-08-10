@@ -1,5 +1,5 @@
-#ifndef MOTOR__TAMIYA_TT02_HPP_
-#define MOTOR__TAMIYA_TT02_HPP_
+#ifndef ROBOT_CONTROLLER2_ACKM__MOTOR_HPP_
+#define ROBOT_CONTROLLER2_ACKM__MOTOR_HPP_
 
 #include <stdint.h>
 
@@ -36,4 +36,4 @@ class Motor {
 
 }  // namespace controller_tamiya_tt02
 
-#endif  // MOTOR__TAMIYA_TT02_HPP_
+#endif  // ROBOT_CONTROLLER2_ACKM__MOTOR_HPP_

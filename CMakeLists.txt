@@ -31,7 +31,9 @@ add_library(
   hardware/carlikebot_system.cpp
   hardware/motor.cpp
   hardware/photo_encoder.cpp
+  hardware/motor_pid.cpp
 )
+
 target_compile_features(robot_controller2_ackm PUBLIC cxx_std_17)
 target_include_directories(robot_controller2_ackm PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/hardware/include>
@@ -84,6 +86,17 @@ if(UNIT_TESTING)
   )
 
   target_link_libraries(module_unit_test_photo_encoder
+    robot_controller2_ackm
+  )
+
+
+  ament_add_gtest(module_unit_test_motor_pid
+    test/modules/ada_servo_driver.cpp
+    test/modules/lgpio.c
+    test/modules/test_motor_pid.cpp
+  )
+
+  target_link_libraries(module_unit_test_motor_pid
     robot_controller2_ackm
   )
 

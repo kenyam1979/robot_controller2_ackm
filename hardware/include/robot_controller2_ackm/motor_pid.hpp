@@ -3,7 +3,7 @@
 
 namespace controller_tamiya_tt02 {
 
-enum MotorPIDSetting { MAX_MV = 100 };
+enum MotorPIDSetting { MAX_MV = 500 };
 
 enum MotorPIDReturnType { OK = 0, ERROR = -1 };
 
@@ -11,9 +11,9 @@ class MotorPID {
  public:
   MotorPID() noexcept;
   MotorPIDReturnType initialize() noexcept;
-//   int calculateManipulatingVariable(double target_v, double current_v,
-//                                     double dt) noexcept;
-//   MotorPIDReturnType reset() noexcept;
+  int calculateManipulatingVariable(double target_v, double current_v,
+                                    double dt) noexcept;
+  MotorPIDReturnType reset() noexcept;
   ~MotorPID() noexcept;
 
  private:
@@ -21,8 +21,7 @@ class MotorPID {
   const double kKp = 1.0;
   const double kKi = 1.0;
   const double kKd = 0.05;
-  const double kMvCoef =
-      70.0;  // Coefficient to convert PID output to manipulating variable
+  const double kMvCoef = 70.0;
 
   // PID calculation
   double error_P_ = 0.0;

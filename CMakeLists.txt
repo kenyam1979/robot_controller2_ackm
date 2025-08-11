@@ -117,3 +117,8 @@ endif()
 ament_export_targets(export_robot_controller2_ackm HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_package()
+
+
+# Command to build and test the package
+# colcon build --cmake-args -DUNIT_TESTING=TRUE -DBUILD_TESTING=FALSE --cmake-clean-first --packages-select robot_controller2_ackm
+# colcon test --event-handlers console_cohesion+ --packages-select robot_controller2_ackm

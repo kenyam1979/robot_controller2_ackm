@@ -1,5 +1,3 @@
-// Test double for ada_servo_driver.hpp
-
 #include "robot_controller2_ackm/ada_servo_driver.hpp"
 
 AdaServoDriver::AdaServoDriver() noexcept {
@@ -57,7 +55,7 @@ AdaServoReturnType AdaServoDriver::setPWMFreq(float frea) noexcept {
   std::cout << "Estimated pre-scale: " << prescaleval << std::endl;
 
   uint8_t prescale = floor(prescaleval + 0.5);
-  std::cout << "Final pre-scale: " << prescale << std::endl;
+  std::cout << "Final pre-scale: " << (int)prescale << std::endl;
 
   uint8_t oldmode = read8(PCA9685_MODE1);
   uint8_t newmode = (oldmode & 0x7F) | 0x10;
@@ -93,6 +91,8 @@ AdaServoReturnType AdaServoDriver::setAllPWM(uint16_t on_time,
   write8(ALL_LED_ON_H, (uint8_t)((0xff00 & on_time) >> 8));
   write8(ALL_LED_OFF_L, (uint8_t)(0x00ff & off_time));
   write8(ALL_LED_OFF_H, (uint8_t)((0xff00 & off_time) >> 8));
+
+  return AdaServoReturnType::OK;
 }
 
 // Private primitive methods

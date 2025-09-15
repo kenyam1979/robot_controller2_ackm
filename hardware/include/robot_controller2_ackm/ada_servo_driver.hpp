@@ -42,10 +42,9 @@ enum AdaServoSetting {
 
 enum AdaServoReturnType {
   OK = 0,
-  // INIT_ERROR = -1,
-  // SET_PWM_ERROR = -2
-  FAIL_EXEC = -1,
-  INVALID_PARAM = -3
+  ERROR = -1,
+  HW_ERROR = -1,
+  INVALID_PARAM = -2
 };
 
 class AdaServoDriver {

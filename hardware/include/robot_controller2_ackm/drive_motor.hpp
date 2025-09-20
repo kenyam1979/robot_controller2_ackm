@@ -8,12 +8,9 @@
 
 namespace controller_tamiya_tt02 {
 
-class DriveMotor : Motor {
+class DriveMotor : public Motor {
  public:
   DriveMotor() noexcept;
-  MotorReturnType initialize(uint8_t svn, uint8_t addr,
-                             char* dev_fname) noexcept;
-
   MotorReturnType setRPM(double rpm) noexcept;
   double getRPM() const noexcept;
   MotorReturnType stopMotor() noexcept;

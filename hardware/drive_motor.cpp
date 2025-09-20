@@ -4,11 +4,6 @@ namespace controller_tamiya_tt02 {
 
 DriveMotor::DriveMotor() noexcept { rpm_ = 0.0; }
 
-MotorReturnType DriveMotor::initialize(uint8_t svn, uint8_t addr,
-                                       char* dev_fname) noexcept {
-  return Motor::initialize(svn, addr, dev_fname);
-}
-
 MotorReturnType DriveMotor::setRPM(double rpm) noexcept {
   if (rpm < 0.0 || rpm > 2000.0) {
     return MotorReturnType::ERROR;

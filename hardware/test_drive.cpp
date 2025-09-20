@@ -13,7 +13,7 @@ int main() {
     std::cerr << "Failed to set PWM frequency" << std::endl;
     return -1;
   }
-  uint8_t servo_num = 1;
+  uint8_t servo_num = 0;
 
   // Sweep the servo from hi to low
   for (uint16_t dc = 200; dc <= 370; dc += 5) {

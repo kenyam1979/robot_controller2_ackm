@@ -14,7 +14,7 @@ int main() {
     return -1;
   }
 
-  uint8_t servo_num = 0;
+  uint8_t servo_num = 1;
 
   // Set the initial duty cycle to 380 (which corresponds to 0 degrees)
   driver.setPWM(servo_num, 0, 380);

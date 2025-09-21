@@ -32,6 +32,8 @@ add_library(
   hardware/motor.cpp
   hardware/photo_encoder.cpp
   hardware/motor_pid.cpp
+  hardware/drive_motor.cpp
+  hardware/steer_motor.cpp
 )
 
 target_compile_features(robot_controller2_ackm PUBLIC cxx_std_17)

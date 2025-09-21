@@ -1,5 +1,5 @@
-#ifndef ROBOT_CONTROLLER2_ACKM__STEER_MOTOR_HPP_
-#define ROBOT_CONTROLLER2_ACKM__STEER_MOTOR_HPP_
+#ifndef ROBOT_CONTROLLER2_ACKM__STEERING_MOTOR_HPP_
+#define ROBOT_CONTROLLER2_ACKM__STEERING_MOTOR_HPP_
 
 #include <stdint.h>
 
@@ -7,13 +7,13 @@
 
 namespace controller_tamiya_tt02 {
 
-class SteerMotor : public Motor {
+class SteeringMotor : public Motor {
  public:
-  SteerMotor() noexcept;
-  MotorReturnType setAngle(double angle) noexcept;
+  SteeringMotor() noexcept;
+  MotorReturnType setAngle(double angle) noexcept;  // angle in radians
   double getAngle() const noexcept;
   MotorReturnType setNeutral() noexcept;
-  ~SteerMotor() noexcept;
+  ~SteeringMotor() noexcept;
 
  private:
   double angle_;
@@ -21,4 +21,4 @@ class SteerMotor : public Motor {
 
 }  // namespace controller_tamiya_tt02
 
-#endif  // ROBOT_CONTROLLER2_ACKM__STEER_MOTOR_HPP_
+#endif  // ROBOT_CONTROLLER2_ACKM__STEERING_MOTOR_HPP_

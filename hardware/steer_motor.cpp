@@ -2,9 +2,9 @@
 
 namespace controller_tamiya_tt02 {
 
-SteerMotor::SteerMotor() noexcept { angle_ = 0.0; }
+SteeringMotor::SteeringMotor() noexcept { angle_ = 0.0; }
 
-MotorReturnType SteerMotor::setAngle(double angle) noexcept {
+MotorReturnType SteeringMotor::setAngle(double angle) noexcept {
   if (angle < -M_PI / 6.0 || angle > M_PI / 6.0) {
     return MotorReturnType::ERROR;
   }
@@ -14,12 +14,10 @@ MotorReturnType SteerMotor::setAngle(double angle) noexcept {
   return Motor::setManipulatingVariable(mv);
 }
 
-double SteerMotor::getAngle() const noexcept { return angle_; }
+double SteeringMotor::getAngle() const noexcept { return angle_; }
 
-MotorReturnType SteerMotor::setNeutral() noexcept {
-  return setAngle(0.0);
-}
+MotorReturnType SteeringMotor::setNeutral() noexcept { return setAngle(0.0); }
 
-SteerMotor::~SteerMotor() noexcept {}
+SteeringMotor::~SteeringMotor() noexcept {}
 
 }  // namespace controller_tamiya_tt02

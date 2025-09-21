@@ -11,8 +11,11 @@ namespace controller_tamiya_tt02 {
 class DriveMotor : public Motor {
  public:
   DriveMotor() noexcept;
-  MotorReturnType setRPM(double rpm) noexcept;
+  MotorReturnType setRPM(double rpm) noexcept;  // Revolutions per minute
   double getRPM() const noexcept;
+  MotorReturnType setAngularVelocity(double avel) noexcept;  // rad/s
+  double getAngularVelocity() const noexcept;
+  
   MotorReturnType stopMotor() noexcept;
   ~DriveMotor() noexcept;
 

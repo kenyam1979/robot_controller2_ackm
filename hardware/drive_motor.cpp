@@ -16,6 +16,15 @@ MotorReturnType DriveMotor::setRPM(double rpm) noexcept {
 
 double DriveMotor::getRPM() const noexcept { return rpm_; }
 
+MotorReturnType DriveMotor::setAngularVelocity(double avel) noexcept {
+  double rpm = avel * 60.0 / (2.0 * M_PI);
+  return setRPM(rpm);
+}
+
+double DriveMotor::getAngularVelocity() const noexcept {
+  return rpm_ / 60.0 * (2.0 * M_PI);
+}
+
 MotorReturnType DriveMotor::stopMotor() noexcept {
   rpm_ = 0.0;
   return Motor::stopMotor();

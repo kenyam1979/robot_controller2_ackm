@@ -33,19 +33,19 @@
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
-namespace ros2_control_demo_example_11
-{
-struct JointValue
-{
+
+#include "robot_controller2_ackm/drive_motor.hpp"
+#include "robot_controller2_ackm/steer_motor.hpp"
+
+namespace controller_tamiya_tt02 {
+struct JointValue {
   double position{0.0};
   double velocity{0.0};
   double effort{0.0};
 };
 
-struct Joint
-{
-  explicit Joint(const std::string & name) : joint_name(name)
-  {
+struct Joint {
+  explicit Joint(const std::string& name) : joint_name(name) {
     state = JointValue();
     command = JointValue();
   }
@@ -56,29 +56,30 @@ struct Joint
   JointValue state;
   JointValue command;
 };
-class CarlikeBotSystemHardware : public hardware_interface::SystemInterface
-{
-public:
+class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
+ public:
   RCLCPP_SHARED_PTR_DEFINITIONS(CarlikeBotSystemHardware);
 
   hardware_interface::CallbackReturn on_init(
-    const hardware_interface::HardwareInfo & info) override;
+      const hardware_interface::HardwareInfo& info) override;
 
-  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  std::vector<hardware_interface::StateInterface> export_state_interfaces()
+      override;
 
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+  std::vector<hardware_interface::CommandInterface> export_command_interfaces()
+      override;
 
   hardware_interface::CallbackReturn on_activate(
-    const rclcpp_lifecycle::State & previous_state) override;
+      const rclcpp_lifecycle::State& previous_state) override;
 
   hardware_interface::CallbackReturn on_deactivate(
-    const rclcpp_lifecycle::State & previous_state) override;
+      const rclcpp_lifecycle::State& previous_state) override;
 
-  hardware_interface::return_type read(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type read(const rclcpp::Time& time,
+                                       const rclcpp::Duration& period) override;
 
   hardware_interface::return_type write(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+      const rclcpp::Time& time, const rclcpp::Duration& period) override;
 
   /// Get the logger of the SystemInterface.
   /**
@@ -92,7 +93,11 @@ public:
    */
   rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
 
-private:
+ private:
+
+  DriveMotor drive_motor_;
+  SteeringMotor steering_motor_;
+
   // Parameters for the CarlikeBot simulation
   double hw_start_sec_;
   double hw_stop_sec_;

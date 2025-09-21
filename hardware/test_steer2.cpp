@@ -3,7 +3,7 @@
 using namespace controller_tamiya_tt02;
 
 int main() {
-  SteerMotor sm;
+  SteeringMotor sm;
 
   uint8_t servo_num = 1;
 

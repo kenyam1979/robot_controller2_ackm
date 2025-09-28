@@ -1,6 +1,6 @@
 <library path="robot_controller2_ackm">
   <class name="robot_controller2_ackm/CarlikeBotSystemHardware"
-    type="robot_controller2_ackm::CarlikeBotSystemHardware"
+    type="controller_tamiya_tt02::CarlikeBotSystemHardware"
     base_class_type="hardware_interface::SystemInterface">
     <description>
       The ros2_control CarlikeBot example using a system hardware interface-type. It uses velocity

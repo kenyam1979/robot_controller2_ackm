@@ -10,7 +10,7 @@ MotorReturnType SteeringMotor::setAngle(double angle) noexcept {
   }
 
   angle_ = angle;
-  int mv = static_cast<int>(380.0 + angle_ * (6 / M_PI) * 60.0);
+  int mv = static_cast<int>(380.0 + 2.0 * angle_ * 180.0 / M_PI);
   return Motor::setManipulatingVariable(mv);
 }
 

@@ -56,6 +56,8 @@ struct Joint {
   JointValue state;
   JointValue command;
 };
+
+
 class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
  public:
   RCLCPP_SHARED_PTR_DEFINITIONS(CarlikeBotSystemHardware);

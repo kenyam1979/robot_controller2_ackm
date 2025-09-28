@@ -29,6 +29,7 @@ add_library(
   robot_controller2_ackm
   SHARED
   hardware/carlikebot_system.cpp
+  hardware/ada_servo_driver.cpp
   hardware/motor.cpp
   hardware/photo_encoder.cpp
   hardware/motor_pid.cpp
@@ -44,6 +45,12 @@ target_include_directories(robot_controller2_ackm PUBLIC
 ament_target_dependencies(
   robot_controller2_ackm PUBLIC
   ${THIS_PACKAGE_INCLUDE_DEPENDS}
+)
+
+# lgpio library
+target_link_libraries(robot_controller2_ackm
+  PUBLIC
+  lgpio
 )
 
 # Export hardware plugins

@@ -35,7 +35,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "remap_odometry_tf",
-            default_value="false",
+            default_value="true",
             description="Remap odometry TF from the steering controller to the TF tree.",
         )
     )
@@ -64,6 +64,7 @@ def generate_launch_description():
             "carlikebot_controllers.yaml",
         ]
     )
+
     # rviz_config_file = PathJoinSubstitution(
     #     [
     #         FindPackageShare("ros2_control_demo_description"),
@@ -81,6 +82,7 @@ def generate_launch_description():
         remappings=[
             ("~/robot_description", "/robot_description"),
             ("/bicycle_steering_controller/tf_odometry", "/tf"),
+            ("/bicycle_steering_controller/reference", "/cmd_vel"),
         ],
         condition=IfCondition(remap_odometry_tf),
     )

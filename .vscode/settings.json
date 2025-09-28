@@ -70,5 +70,25 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "python.autoComplete.extraPaths": [
+        "/home/kenyam/ros2_ws/install/wit_ros2_imu/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/robot_navigation/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/robot_controller/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/map2gazebo/lib/python3.10/site-packages",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_testing/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/kenyam/ros2_ws/install/wit_ros2_imu/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/robot_navigation/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/robot_controller/lib/python3.10/site-packages",
+        "/home/kenyam/ros2_ws/install/map2gazebo/lib/python3.10/site-packages",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_testing/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    "ros.distro": "humble"
 }

@@ -1,0 +1,38 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/kenyam/ros2test_ws/install/test_control_ackm/include/**",
+        "/home/kenyam/ros2test_ws/install/test_control/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_9/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_8/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_7/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_6/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_5/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_4/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_3/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_2/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_14/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_12/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_11/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_10/include/**",
+        "/home/kenyam/ros2test_ws/install/ros2_control_demo_example_1/include/**",
+        "/home/kenyam/ros2test_ws/install/robot_controller2_ackm/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/kenyam/ros2test_ws/src/auto_utest/include/**",
+        "/home/kenyam/ros2test_ws/src/ros_gz_project_template/ros_gz_example_gazebo/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

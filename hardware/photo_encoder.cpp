@@ -33,7 +33,7 @@ PhotoEncoderReturnType PhotoEncoder::initialize(int gpiochip,
 
 float PhotoEncoder::getRPM(float diff) noexcept {
   if (diff <= 0.0) {
-    return PhotoEncoderReturnType::ERROR;  // Avoid division by zero
+    return HUGE_VAL; //PhotoEncoderReturnType::ERROR  // Avoid division by zero
   }
 
   float rpm = 0.0;
@@ -42,6 +42,15 @@ float PhotoEncoder::getRPM(float diff) noexcept {
         diff * 60.0;
   previous_ = current_;
   return rpm;
+}
+
+
+float PhotoEncoder::getAngularVelocity(float diff) noexcept {
+  if (diff <= 0.0) {
+    return HUGE_VAL;  // PhotoEncoderReturnType::ERROR  // Avoid division by zero
+  }
+  float rpm = getRPM(diff);
+  return rpm / 60.0 * (2.0 * M_PI);
 }
 
 PhotoEncoderReturnType PhotoEncoder::reset() noexcept {

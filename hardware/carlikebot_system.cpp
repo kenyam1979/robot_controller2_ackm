@@ -34,6 +34,13 @@ hardware_interface::CallbackReturn CarlikeBotSystemHardware::on_init(
       hardware_interface::CallbackReturn::SUCCESS) {
     return hardware_interface::CallbackReturn::ERROR;
   }
+
+  node_ = std::make_shared<rclcpp::Node>("carlikebot_hardware");
+  velocity_publisher_ =
+      node_->create_publisher<std_msgs::msg::Float32>("wheel_velocity", 10);
+  command_velocity_publisher_ =
+      node_->create_publisher<std_msgs::msg::Float32>("wheel_cmd_velocity", 10);
+
   logger_ = std::make_shared<rclcpp::Logger>(
       rclcpp::get_logger("controller_manager.resource_manager.hardware_"
                          "component.system.CarlikeBot"));
@@ -238,6 +245,9 @@ hardware_interface::CallbackReturn CarlikeBotSystemHardware::on_activate(
   drive_motor_.stopMotor();
   steering_motor_.setNeutral();
 
+  photo_encoder_.initialize(PhotoEncoderSetting::GPIO_CHIP,
+                            PhotoEncoderSetting::ENC_PIN);
+
   RCLCPP_INFO(get_logger(), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
@@ -277,7 +287,10 @@ hardware_interface::return_type CarlikeBotSystemHardware::read(
   // your production code
 
   hw_interfaces_["steering"].state.position = steering_motor_.getAngle();
-  hw_interfaces_["traction"].state.velocity = drive_motor_.getAngularVelocity();
+  // hw_interfaces_["traction"].state.velocity =
+  // drive_motor_.getAngularVelocity();
+  hw_interfaces_["traction"].state.velocity =
+      photo_encoder_.getAngularVelocity(period.seconds());
 
   // hw_interfaces_["steering"].state.position =
   //     hw_interfaces_["steering"].command.position;
@@ -307,6 +320,13 @@ hardware_interface::return_type CarlikeBotSystemHardware::read(
 
   // END: This part here is for exemplary purposes - Please do not copy to your
   // production code
+
+  auto velocity_msg = std_msgs::msg::Float32();
+  velocity_msg.data = hw_interfaces_["traction"].state.velocity;
+  velocity_publisher_->publish(velocity_msg);
+
+  velocity_msg.data = hw_interfaces_["traction"].command.velocity;
+  command_velocity_publisher_->publish(velocity_msg);
 
   return hardware_interface::return_type::OK;
 }

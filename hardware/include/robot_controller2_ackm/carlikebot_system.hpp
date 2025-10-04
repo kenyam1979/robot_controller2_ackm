@@ -33,9 +33,14 @@
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
+#include "std_msgs/msg/float32.hpp"
+#include "rclcpp/publisher.hpp"
+
+
 
 #include "robot_controller2_ackm/drive_motor.hpp"
 #include "robot_controller2_ackm/steer_motor.hpp"
+#include "robot_controller2_ackm/photo_encoder.hpp"
 
 namespace controller_tamiya_tt02 {
 struct JointValue {
@@ -99,6 +104,7 @@ class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
 
   DriveMotor drive_motor_;
   SteeringMotor steering_motor_;
+  PhotoEncoder photo_encoder_;
 
   // Parameters for the CarlikeBot simulation
   double hw_start_sec_;
@@ -107,6 +113,10 @@ class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
   // Objects for logging
   std::shared_ptr<rclcpp::Logger> logger_;
   rclcpp::Clock::SharedPtr clock_;
+
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr velocity_publisher_;
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr command_velocity_publisher_;
+  rclcpp::Node::SharedPtr node_;
 
   // std::vector<std::tuple<std::string, double, double>>
   //   hw_interfaces_;  // name of joint, state, command

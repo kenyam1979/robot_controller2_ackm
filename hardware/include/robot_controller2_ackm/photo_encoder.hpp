@@ -1,6 +1,8 @@
 #ifndef ROBOT_CONTROLLER2_ACKM__PHOTO_ENCODER_HPP_
 #define ROBOT_CONTROLLER2_ACKM__PHOTO_ENCODER_HPP_
 
+#include <math.h>
+
 #include <iostream>
 
 #include "lgpio.h"
@@ -13,7 +15,7 @@ enum PhotoEncoderSetting {
   GEAR_TOOTH = 40,
 };
 
-enum PhotoEncoderReturnType {
+enum class PhotoEncoderReturnType : int {
   OK = 0,
   ERROR = -1,
   DRIVER_ERROR = -2,
@@ -25,6 +27,7 @@ class PhotoEncoder {
   PhotoEncoder() noexcept;
   PhotoEncoderReturnType initialize(int gpiochip, int pin) noexcept;
   float getRPM(float diff) noexcept;
+  float getAngularVelocity(float diff) noexcept;
   PhotoEncoderReturnType reset() noexcept;
   ~PhotoEncoder() noexcept;
 

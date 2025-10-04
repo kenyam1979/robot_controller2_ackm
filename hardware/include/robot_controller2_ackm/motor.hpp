@@ -11,7 +11,7 @@ enum MotorSetting {
   MAX_MV = 500,
 };
 
-enum MotorReturnType {
+enum class MotorReturnType : int {
   OK = 0,
   ERROR = -1,
   DRIVER_ERROR = -2,

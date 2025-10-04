@@ -38,7 +38,7 @@ float PhotoEncoder::getRPM(float diff) noexcept {
 
   float rpm = 0.0;
   current_ = count_;
-  rpm = ((float)(current_ - previous_) / PhotoEncoderSetting::GEAR_TOOTH) /
+  rpm = ((float)(current_ - previous_) / (float)PhotoEncoderSetting::GEAR_TOOTH) /
         diff * 60.0;
   previous_ = current_;
   return rpm;

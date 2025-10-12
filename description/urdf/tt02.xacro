@@ -26,9 +26,9 @@
     <!-- <xacro:property name="caster_base_height"
     value="${wheel_radius+wheel_zoff-(base_height/2)-(caster_radius*2)}" /> -->
 
-    <xacro:property name="lidar_xoff" value="0.05" />
-    <xacro:property name="lidar_height" value="0.06" />
-    <xacro:property name="lidar_radius" value="0.035" />
+    <!-- <xacro:property name="lidar_xoff" value="0.05" /> -->
+    <!-- <xacro:property name="lidar_height" value="0.06" /> -->
+    <!-- <xacro:property name="lidar_radius" value="0.035" /> -->
 
     <!-- <xacro:property name="battery_width" value="${base_width}" /> -->
     <!-- <xacro:property name="battery_length" value="0.09" /> -->
@@ -53,7 +53,7 @@
     <xacro:property name="wheel_mass" value="0.034" />
     <!-- <xacro:property name="caster_mass" value="0.05" /> -->
     <!-- <xacro:property name="battery_mass" value="0.107" /> -->
-    <xacro:property name="lidar_mass" value="0.17" />
+    <!-- <xacro:property name="lidar_mass" value="0.17" /> -->
     <!-- <xacro:property name="imu_mass" value="0.0544" /> -->
     <!-- <xacro:property name="raspi_mass" value="0.047" /> -->
     <!-- <xacro:property name="camera_mass" value="0.047" /> -->
@@ -271,8 +271,7 @@
 
 
     <!-- Import carlikebot ros2_control description -->
-    <!-- <xacro:include filename="$(find
-  ros2_control_demo_example_11)/ros2_control/carlikebot.ros2_control.xacro" /> -->
+    <!-- <xacro:include filename="$(find  ros2_control_demo_example_11)/ros2_control/carlikebot.ros2_control.xacro" /> -->
 
     <!-- <xacro:carlikebot prefix="$(arg prefix)" /> -->
 

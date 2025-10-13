@@ -34,9 +34,10 @@
     <!-- <xacro:property name="battery_length" value="0.09" /> -->
     <!-- <xacro:property name="battery_height" value="0.025" /> -->
 
-    <!-- <xacro:property name="imu_width" value="0.06" /> -->
-    <!-- <xacro:property name="imu_length" value="0.045" /> -->
-    <!-- <xacro:property name="imu_height" value="0.01" /> -->
+    <xacro:property name="imu_xoff" value="0.02" />
+    <xacro:property name="imu_width" value="0.06" />
+    <xacro:property name="imu_length" value="0.045" />
+    <xacro:property name="imu_height" value="0.01" />
 
     <!-- <xacro:property name="raspi_xoff" value="0.067" /> -->
     <!-- <xacro:property name="raspi_width" value="0.085" /> -->
@@ -54,7 +55,7 @@
     <!-- <xacro:property name="caster_mass" value="0.05" /> -->
     <!-- <xacro:property name="battery_mass" value="0.107" /> -->
     <xacro:property name="lidar_mass" value="0.17" />
-    <!-- <xacro:property name="imu_mass" value="0.0544" /> -->
+    <xacro:property name="imu_mass" value="0.0544" />
     <!-- <xacro:property name="raspi_mass" value="0.047" /> -->
     <!-- <xacro:property name="camera_mass" value="0.047" /> -->
 
@@ -332,6 +333,95 @@
       <origin xyz="${lidar_xoff} 0.0 ${base_height/2+lidar_height/2}" rpy="0 0 0" />
     </joint>
 
+
+    <!-- IMU -->
+    <link name="imu_link">
+      <visual>
+        <geometry>
+          <box size="${imu_length} ${imu_width} ${imu_height}" />
+        </geometry>
+        <material name="Cyan">
+          <color rgba="0 1.0 1.0 1.0" />
+        </material>
+      </visual>
+
+      <collision>
+        <geometry>
+          <box size="${imu_length} ${imu_width} ${imu_height}" />
+        </geometry>
+      </collision>
+
+      <xacro:box_inertia m="${imu_mass}" w="${imu_width}" d="${imu_length}" h="${imu_height}" />
+    </link>
+
+
+    <!-- <gazebo reference="imu_link">
+      <sensor name="yahboom" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <topic>imu/data_raw</topic>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo> -->
+
+    <joint name="imu_joint" type="fixed">
+      <parent link="base_link" />
+      <child link="imu_link" />
+      <origin xyz="$-{imu_xoff} 0.0 ${base_height/2+imu_height/2}" />
+    </joint>
 
     <!-- Import carlikebot ros2_control description -->
     <!-- <xacro:include filename="$(find

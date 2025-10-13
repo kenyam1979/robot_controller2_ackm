@@ -37,9 +37,9 @@ hardware_interface::CallbackReturn CarlikeBotSystemHardware::on_init(
 
   node_ = std::make_shared<rclcpp::Node>("carlikebot_hardware");
   velocity_publisher_ =
-      node_->create_publisher<std_msgs::msg::Float32>("wheel_velocity", 10);
+      node_->create_publisher<std_msgs::msg::Float32>("debug__wheel_velocity", 10);
   command_velocity_publisher_ =
-      node_->create_publisher<std_msgs::msg::Float32>("wheel_cmd_velocity", 10);
+      node_->create_publisher<std_msgs::msg::Float32>("debug__wheel_cmd_velocity", 10);
 
   logger_ = std::make_shared<rclcpp::Logger>(
       rclcpp::get_logger("controller_manager.resource_manager.hardware_"

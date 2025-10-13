@@ -65,6 +65,13 @@ def generate_launch_description():
         ]
     )
 
+    ekf_config = PathJoinSubstitution(
+        [
+            FindPackageShare("robot_controller2_ackm"),
+            "config",
+            "ekf.yaml",
+        ]
+    )
     # rviz_config_file = PathJoinSubstitution(
     #     [
     #         FindPackageShare("ros2_control_demo_description"),
@@ -83,6 +90,7 @@ def generate_launch_description():
             ("~/robot_description", "/robot_description"),
             ("/bicycle_steering_controller/tf_odometry", "/tf"),
             ("/bicycle_steering_controller/reference", "/cmd_vel"),
+            ("/bicycle_steering_controller/odometry", "/wheel/odom"),
         ],
         condition=IfCondition(remap_odometry_tf),
     )
@@ -102,6 +110,15 @@ def generate_launch_description():
         output="both",
         parameters=[robot_description],
     )
+    
+    robot_localization_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[ekf_config]
+    )
+    
     # rviz_node = Node(
     #     package="rviz2",
     #     executable="rviz2",

@@ -420,7 +420,7 @@
     <joint name="imu_joint" type="fixed">
       <parent link="base_link" />
       <child link="imu_link" />
-      <origin xyz="$-{imu_xoff} 0.0 ${base_height/2+imu_height/2}" />
+      <origin xyz="${-imu_xoff} 0.0 ${base_height/2+imu_height/2}" />
     </joint>
 
     <!-- Import carlikebot ros2_control description -->

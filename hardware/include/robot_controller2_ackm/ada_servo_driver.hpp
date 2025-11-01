@@ -66,7 +66,8 @@ class AdaServoDriver {
   AdaServoReturnType setAllPWM(uint16_t on_time, uint16_t off_time) noexcept;
 
   // This function close the I2C device file and reset the driver
-  AdaServoReturnType resetAdaServoDriver() noexcept;
+  // AdaServoReturnType resetAdaServoDriver() noexcept;
+  ~AdaServoDriver() noexcept;
 
  private:
   int _i2c;

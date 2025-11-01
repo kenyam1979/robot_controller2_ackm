@@ -62,10 +62,6 @@ MotorReturnType Motor::stopMotor() noexcept {
   return MotorReturnType::OK;
 }
 
-Motor::~Motor() noexcept {
-  stopMotor();
-  // TODO - this cannot be done at each instance since motor_driver_ is static.
-  // motor_driver_.resetAdaServoDriver();
-}
+Motor::~Motor() noexcept { stopMotor(); }
 
 }  // namespace controller_tamiya_tt02

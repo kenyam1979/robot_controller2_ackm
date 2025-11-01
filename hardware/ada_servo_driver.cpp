@@ -105,12 +105,7 @@ AdaServoReturnType AdaServoDriver::setAllPWM(uint16_t on_time,
   return AdaServoReturnType::OK;
 }
 
-AdaServoReturnType AdaServoDriver::resetAdaServoDriver() noexcept {
-  if (close(_i2c) < 0) {
-    return AdaServoReturnType::HW_ERROR;
-  }
-  return AdaServoReturnType::OK;
-}
+AdaServoDriver::~AdaServoDriver() noexcept { close(_i2c) < 0; }
 
 // Private primitive methods
 void AdaServoDriver::write8(uint8_t addr, uint8_t d) noexcept {

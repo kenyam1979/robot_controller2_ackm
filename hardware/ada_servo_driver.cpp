@@ -5,12 +5,13 @@ AdaServoDriver::AdaServoDriver() noexcept {
 }
 
 AdaServoReturnType AdaServoDriver::initAdaServoDriver(uint8_t addr,
-                                                      char *fname) noexcept {
+                                                      char* fname) noexcept {
   // Parameter check
   if (addr == 0x00) {
     return AdaServoReturnType::INVALID_PARAM;
   }
   _i2c_addr = addr;
+
   if (fname == nullptr) {
     return AdaServoReturnType::INVALID_PARAM;
   }
@@ -18,15 +19,17 @@ AdaServoReturnType AdaServoDriver::initAdaServoDriver(uint8_t addr,
 
   // Device initialization
   if ((_i2c = open(_i2c_fname, O_RDWR)) < 0) {
+    close(_i2c);
     return AdaServoReturnType::HW_ERROR;
   }
 
   if (ioctl(_i2c, I2C_SLAVE, _i2c_addr) < 0) {
+    close(_i2c);
     return AdaServoReturnType::HW_ERROR;
   }
 
+  // Write initial settings to PCA9685
   uint8_t mode1;
-
   setAllPWM(0, 0);
   write8(PCA9685_MODE2, OUTDRV);
   write8(PCA9685_MODE1, ALLCALL);
@@ -52,11 +55,13 @@ AdaServoReturnType AdaServoDriver::setPWMFreq(float frea) noexcept {
   prescaleval /= 4096;
   prescaleval /= frea;
   prescaleval -= 1;
-  std::cout << "Estimated pre-scale: " << prescaleval << std::endl;
+  // For dubug - std::cout << "Estimated pre-scale: " << prescaleval <<
+  // std::endl;
 
   uint8_t prescale = floor(prescaleval + 0.5);
-  std::cout << "Final pre-scale: " << (int)prescale << std::endl;
+  // For debug - std::cout << "Final pre-scale: " << (int)prescale << std::endl;
 
+  // Write settings to PCA9685
   uint8_t oldmode = read8(PCA9685_MODE1);
   uint8_t newmode = (oldmode & 0x7F) | 0x10;
   write8(PCA9685_MODE1, newmode);
@@ -76,7 +81,9 @@ AdaServoReturnType AdaServoDriver::setPWM(uint8_t svn, uint16_t on_time,
     return AdaServoReturnType::INVALID_PARAM;
   }
 
-  // Set PWM
+  // TODO: Add parameter check for on_time and off_time
+
+  // Set PWM duyy cycle for specific servo
   write8(LED0_ON_L + 4 * svn, (uint8_t)(0x00ff & on_time));
   write8(LED0_ON_H + 4 * svn, (uint8_t)((0xff00 & on_time) >> 8));
   write8(LED0_OFF_L + 4 * svn, (uint8_t)(0x00ff & off_time));
@@ -87,6 +94,9 @@ AdaServoReturnType AdaServoDriver::setPWM(uint8_t svn, uint16_t on_time,
 
 AdaServoReturnType AdaServoDriver::setAllPWM(uint16_t on_time,
                                              uint16_t off_time) noexcept {
+  // TODO: Add parameter check for on_time and off_time
+
+  // Set PWM duty cycle for all servos
   write8(ALL_LED_ON_L, (uint8_t)(0x00ff & on_time));
   write8(ALL_LED_ON_H, (uint8_t)((0xff00 & on_time) >> 8));
   write8(ALL_LED_OFF_L, (uint8_t)(0x00ff & off_time));
@@ -95,29 +105,36 @@ AdaServoReturnType AdaServoDriver::setAllPWM(uint16_t on_time,
   return AdaServoReturnType::OK;
 }
 
+AdaServoReturnType AdaServoDriver::resetAdaServoDriver() noexcept {
+  if (close(_i2c) < 0) {
+    return AdaServoReturnType::HW_ERROR;
+  }
+  return AdaServoReturnType::OK;
+}
+
 // Private primitive methods
 void AdaServoDriver::write8(uint8_t addr, uint8_t d) noexcept {
-  uint8_t sendData[2];
+  uint8_t send_data[2];
 
-  sendData[0] = addr;
-  sendData[1] = d;
-  if (write(_i2c, sendData, 2) != 2) {
+  send_data[0] = addr;
+  send_data[1] = d;
+  if (write(_i2c, send_data, 2) != 2) {
     std::cerr << "Faild to send i2c\n" << std::endl;
   }
 }
 
 uint8_t AdaServoDriver::read8(uint8_t addr) noexcept {
-  uint8_t sendData;
-  uint8_t readData;
+  uint8_t send_data;
+  uint8_t read_data;
 
-  sendData = addr;
-  if (write(_i2c, &sendData, 1) != 1) {
+  send_data = addr;
+  if (write(_i2c, &send_data, 1) != 1) {
     std::cerr << "Failed to send i2c @read" << std::endl;
   } else {
-    if (read(_i2c, &readData, 1) != 1) {
+    if (read(_i2c, &read_data, 1) != 1) {
       std::cerr << "Failed to read i2c" << std::endl;
     }
   }
 
-  return readData;
+  return read_data;
 }

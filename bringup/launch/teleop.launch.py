@@ -45,6 +45,7 @@ def generate_launch_description():
             package='teleop_twist_joy', executable='teleop_node',
             name='teleop_twist_joy_node',
             parameters=[config_filepath, {'publish_stamped_twist': publish_stamped_twist}],
-            remappings={('/cmd_vel', launch.substitutions.LaunchConfiguration('joy_vel'))},
+            # remappings={('/cmd_vel', launch.substitutions.LaunchConfiguration('joy_vel'))},
+            remappings={('/cmd_vel', '/cmd_vel_nav')}
             ),
     ])

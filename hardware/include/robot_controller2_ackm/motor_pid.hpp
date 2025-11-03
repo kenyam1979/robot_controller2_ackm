@@ -3,8 +3,6 @@
 
 namespace controller_tamiya_tt02 {
 
-enum MotorPIDSetting { MAX_MV = 500 };
-
 enum MotorPIDReturnType { OK = 0, ERROR = -1 };
 
 class MotorPID {
@@ -18,10 +16,11 @@ class MotorPID {
 
  private:
   // PID parameters
+  // TODO: Tune these parameters
   const double kKp = 1.0;
   const double kKi = 1.0;
   const double kKd = 0.05;
-  const double kMvCoef = 70.0;
+  const double kMvCoef = 1.0;
 
   // PID calculation
   double error_P_ = 0.0;

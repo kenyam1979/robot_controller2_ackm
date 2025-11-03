@@ -29,18 +29,15 @@
 #include "rclcpp/duration.hpp"
 #include "rclcpp/logger.hpp"
 #include "rclcpp/macros.hpp"
+#include "rclcpp/publisher.hpp"
 #include "rclcpp/time.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
-
-#include "std_msgs/msg/float32.hpp"
-#include "rclcpp/publisher.hpp"
-
-
-
 #include "robot_controller2_ackm/drive_motor.hpp"
-#include "robot_controller2_ackm/steer_motor.hpp"
+#include "robot_controller2_ackm/motor_pid.hpp"
 #include "robot_controller2_ackm/photo_encoder.hpp"
+#include "robot_controller2_ackm/steer_motor.hpp"
+#include "std_msgs/msg/float32.hpp"
 
 namespace controller_tamiya_tt02 {
 struct JointValue {
@@ -61,7 +58,6 @@ struct Joint {
   JointValue state;
   JointValue command;
 };
-
 
 class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
  public:
@@ -101,10 +97,11 @@ class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
   rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
 
  private:
-
   DriveMotor drive_motor_;
+  // Motor drive_motor_;
   SteeringMotor steering_motor_;
   PhotoEncoder photo_encoder_;
+  MotorPID motor_pid_;
 
   // Parameters for the CarlikeBot simulation
   double hw_start_sec_;
@@ -115,7 +112,9 @@ class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
   rclcpp::Clock::SharedPtr clock_;
 
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr velocity_publisher_;
-  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr command_velocity_publisher_;
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr
+      command_velocity_publisher_;
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr motor_pid_mv_publisher_;
   rclcpp::Node::SharedPtr node_;
 
   // std::vector<std::tuple<std::string, double, double>>
@@ -123,6 +122,6 @@ class CarlikeBotSystemHardware : public hardware_interface::SystemInterface {
   std::map<std::string, Joint> hw_interfaces_;
 };
 
-}  // namespace ros2_control_demo_example_11
+}  // namespace controller_tamiya_tt02
 
 #endif  // ROS2_CONTROL_DEMO_EXAMPLE_11__CARLIKEBOT_SYSTEM_HPP_

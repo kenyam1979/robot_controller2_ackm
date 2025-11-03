@@ -25,11 +25,11 @@ int MotorPID::calculateManipulatingVariable(double target_v, double current_v,
                          (kKp * error_P_ + kKi * error_I_ + kKd * error_D_));
 
   // Limit mv to MAX_MV
-  if (mv_ > MotorPIDSetting::MAX_MV) {
-    mv_ = MotorPIDSetting::MAX_MV;
-  } else if (mv_ < -MotorPIDSetting::MAX_MV) {
-    mv_ = -MotorPIDSetting::MAX_MV;
-  }
+  // if (mv_ > MotorPIDSetting::MAX_MV) {
+  //   mv_ = MotorPIDSetting::MAX_MV;
+  // } else if (mv_ < -MotorPIDSetting::MAX_MV) {
+  //   mv_ = -MotorPIDSetting::MAX_MV;
+  // }
 
   // Update previous error
   error_P_prev_ = error_P_;

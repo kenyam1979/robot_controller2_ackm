@@ -5,7 +5,9 @@ namespace controller_tamiya_tt02 {
 DriveMotor::DriveMotor() noexcept { rpm_ = 0.0; }
 
 MotorReturnType DriveMotor::setRPM(double rpm) noexcept {
-  if (rpm < 0.0 || rpm > 2000.0) {
+  // TODO: adjust the code considering negative rpm as braking
+
+  if (rpm < -1000.0 || rpm > 2000.0) {
     return MotorReturnType::ERROR;
   }
 

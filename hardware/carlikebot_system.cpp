@@ -36,10 +36,12 @@ hardware_interface::CallbackReturn CarlikeBotSystemHardware::on_init(
   }
 
   node_ = std::make_shared<rclcpp::Node>("carlikebot_hardware");
-  velocity_publisher_ =
-      node_->create_publisher<std_msgs::msg::Float32>("debug__wheel_velocity", 10);
-  command_velocity_publisher_ =
-      node_->create_publisher<std_msgs::msg::Float32>("debug__wheel_cmd_velocity", 10);
+  velocity_publisher_ = node_->create_publisher<std_msgs::msg::Float32>(
+      "debug__wheel_velocity", 10);
+  command_velocity_publisher_ = node_->create_publisher<std_msgs::msg::Float32>(
+      "debug__wheel_cmd_velocity", 10);
+  motor_pid_mv_publisher_ = node_->create_publisher<std_msgs::msg::Float32>(
+      "debug__motor_pid_mv", 10);
 
   logger_ = std::make_shared<rclcpp::Logger>(
       rclcpp::get_logger("controller_manager.resource_manager.hardware_"
@@ -243,10 +245,13 @@ hardware_interface::CallbackReturn CarlikeBotSystemHardware::on_activate(
   drive_motor_.initialize(0, 0x40, (char*)"/dev/i2c-1");
   steering_motor_.initialize(1, 0x40, (char*)"/dev/i2c-1");
   drive_motor_.stopMotor();
+
   steering_motor_.setNeutral();
 
   photo_encoder_.initialize(PhotoEncoderSetting::GPIO_CHIP,
                             PhotoEncoderSetting::ENC_PIN);
+
+  motor_pid_.initialize();
 
   RCLCPP_INFO(get_logger(), "Successfully activated!");
 
@@ -336,12 +341,19 @@ hardware_interface::return_type CarlikeBotSystemHardware::read(
 // hardware
 //
 hardware_interface::return_type CarlikeBotSystemHardware::write(
-    const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/) {
+    const rclcpp::Time& /*time*/, const rclcpp::Duration& period) {
   // BEGIN: This part here is for exemplary purposes - Please do not copy to
   // your production code
 
   steering_motor_.setAngle(hw_interfaces_["steering"].command.position);
-  drive_motor_.setAngularVelocity(hw_interfaces_["traction"].command.velocity);
+
+  int mv = motor_pid_.calculateManipulatingVariable(
+      hw_interfaces_["traction"].command.velocity,
+      hw_interfaces_["traction"].state.velocity, period.seconds());
+
+  // drive_motor_.setManipulatingVariable(mv);
+  // drive_motor_.setAngularVelocity(hw_interfaces_["traction"].command.velocity);
+  drive_motor_.setAngularVelocity((float)mv);
 
   std::stringstream ss;
   ss << "Writing commands:";
@@ -358,6 +370,10 @@ hardware_interface::return_type CarlikeBotSystemHardware::write(
   RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 500, "%s", ss.str().c_str());
   // END: This part here is for exemplary purposes - Please do not copy to your
   // production code
+
+  auto mv_msg = std_msgs::msg::Float32();
+  mv_msg.data = (float)mv;
+  motor_pid_mv_publisher_->publish(mv_msg);
 
   return hardware_interface::return_type::OK;
 }

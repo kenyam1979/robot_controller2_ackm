@@ -6,6 +6,7 @@ DriveMotor::DriveMotor() noexcept { rpm_ = 0.0; }
 
 MotorReturnType DriveMotor::setRPM(double rpm) noexcept {
   // TODO: adjust the code considering negative rpm as braking
+  // TODO: doesnt work before warm up
 
   if (rpm < -1000.0 || rpm > 2000.0) {
     return MotorReturnType::ERROR;

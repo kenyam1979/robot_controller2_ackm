@@ -28,10 +28,7 @@ double DriveMotor::getAngularVelocity() const noexcept {
   return rpm_ / 60.0 * (2.0 * M_PI);
 }
 
-MotorReturnType DriveMotor::stopMotor() noexcept {
-  rpm_ = 0.0;
-  return Motor::stopMotor();
-}
+MotorReturnType DriveMotor::stopMotor() noexcept { return setRPM(0.0); }
 
 DriveMotor::~DriveMotor() noexcept {}
 

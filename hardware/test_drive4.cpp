@@ -20,24 +20,27 @@ int main() {
     std::cerr << "Failed to initialize PhotoEncoder." << std::endl;
     return -1;
   }
-  double av = 50.0;
 
   // PWM warmup
   dm.setAngularVelocity(0.0);
   usleep(1000000);
 
-  for (double t = 0.0; t < 1.0; t += 0.1) {
-    if (dm.setAngularVelocity(av) != MotorReturnType::OK) {
-      std::cerr << "Failed to set AV: " << av << std::endl;
-      return -1;
+  for (double av = 20.0; av < 200; av += 20) {
+    for (double t = 0.0; t < 2.0; t += 0.1) {
+      if (dm.setAngularVelocity(av) != MotorReturnType::OK) {
+        std::cerr << "Failed to set AV: " << av << std::endl;
+        return -1;
+      }
+      // std::cout << "Setting AV" << dm.getAngularVelocity() << std::endl;
+      std::cout << av << ", " << t << ", "
+                << pe.getAngularVelocity(0.1) << std::endl;
+      usleep(100000);  // Sleep for 0.1 second
     }
-    // std::cout << "Setting AV" << dm.getAngularVelocity() << std::endl;
-    std::cout << "av: " << av << ", " << t << ", " << pe.getAngularVelocity(0.1)
-              << std::endl;
-    usleep(100000);  // Sleep for 0.1 second
-  }
 
-  dm.stopMotor();
+    dm.setAngularVelocity(-10.0);
+    // dm.stopMotor();
+    usleep(3000000);
+  }
   pe.reset();
 
   return 0;

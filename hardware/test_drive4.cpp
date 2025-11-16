@@ -26,7 +26,7 @@ int main() {
   usleep(1000000);
 
   for (double av = 20.0; av < 200; av += 20) {
-    for (double t = 0.0; t < 2.0; t += 0.1) {
+    for (double t = 0.0; t < 3.0; t += 0.1) {
       if (dm.setAngularVelocity(av) != MotorReturnType::OK) {
         std::cerr << "Failed to set AV: " << av << std::endl;
         return -1;
@@ -46,5 +46,4 @@ int main() {
   return 0;
 }
 
-// g++ -I./include ada_servo_driver.cpp  motor.cpp drive_motor.cpp
-// test_drive4.cpp photo_encoder.cpp -llgpio -o test_drive4
+// g++ -I./include ada_servo_driver.cpp  motor.cpp drive_motor.cpp test_drive4.cpp photo_encoder.cpp -llgpio -o test_drive4
